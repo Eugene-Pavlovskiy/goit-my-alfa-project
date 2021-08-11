@@ -1,0 +1,272 @@
+:root {
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-duration: 250ms;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  background-color: rgb(228, 243, 95);
+  background-image: url(https://source.unsplash.com/1600x900/?cars);
+  background-size: cover;
+  color: #212121;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* NAV */
+nav {
+  --duration: .5s;
+  --easing: ease-in-out;
+  position: relative;
+  width: 220px;
+  margin: 20px;
+}
+nav ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+nav li {
+  margin: -4px 0 0 0;
+}
+nav a {
+  display: block;
+  text-decoration: none;
+  background: #fff;
+  transform-origin: 0 0;
+  transition: transform var(--duration) var(--easing), color var(--duration) var(--easing);
+  transition-delay: var(--delay-out);
+  border-radius: 4px;
+  padding: 1em 1.52em;
+}
+nav a:hover {
+  background: #efefef;
+}
+nav .sub-menu a {
+  font-size: .9em;
+  color: #666666;
+  border-left: 2em solid white;
+  padding: .75em;
+  background: linear-gradient(to right, #dddddd 2px, #ffffff 2px);
+}
+nav .sub-menu a:hover {
+  background: linear-gradient(to right, #dddddd 2px, #efefef 2px);
+}
+nav header {
+  font-weight: 600;
+  display: block;
+  background: rgba(255, 255, 255, 0.5);
+  transform-origin: 0 0;
+  transition: transform var(--duration) var(--easing), color var(--duration) var(--easing);
+  transition-delay: var(--delay-out);
+  border-radius: 4px;
+  padding: 1em 1.52em;
+}
+nav header span {
+  border: none;
+  background: transparent;
+  font-size: 1.5em;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+  float: right;
+}
+nav footer button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
+  padding: calc(1em - 2px);
+  width: 100%;
+  transform-origin: 0 0;
+  transition: transform var(--duration) var(--easing);
+  transition-delay: calc(var(--duration) + (.1s * (var(--count) / 2)));
+  cursor: pointer;
+  outline: none;
+  background: #cdcdcd;
+  opacity: 0;
+}
+nav.closed a,
+nav.closed header {
+  transform: translateY(calc(var(--top) * -1)) scaleY(0.1) scaleX(0.2);
+  transition-delay: var(--delay-in);
+  color: transparent;
+}
+nav.closed footer button {
+  transition-delay: 0s;
+  transform: scaleY(0.7) scaleX(0.2);
+}
+
+.gallery {
+  display: grid;
+  width: 1200px;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  grid-auto-rows: 240px;
+  grid-gap: 12px;
+  padding: 0;
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* .container {
+  background-color: blue;
+} */
+
+.gallery__item {
+  position: relative;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.gallery__image:hover {
+  transform: scale(1.03);
+}
+
+.gallery__image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform var(--animation-duration) var(--timing-function);
+}
+
+.gallery__link {
+  display: block;
+  text-decoration: none;
+  height: 100%;
+}
+
+.gallery__link:hover {
+  cursor: zoom-in;
+}
+
+/* Lightbox */
+.lightbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--animation-duration) var(--timing-function);
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  pointer-events: initial;
+}
+
+.lightbox__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.lightbox__content {
+  transform: scale(0.95);
+  transition: transform var(--animation-duration) var(--timing-function);
+}
+
+.lightbox.is-open .lightbox__content {
+  transform: scale(1);
+}
+
+.lightbox__image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 100vh;
+  max-width: 100vw;
+}
+
+.lightbox__button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color var(--animation-duration) var(--timing-function);
+  outline: none;
+  background-image: url('../images/icon-close.svg');
+  background-position: center;
+  background-size: 60%;
+  background-repeat: no-repeat;
+}
+
+.lightbox__button:hover,
+.lightbox__button:focus {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.social
+{
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  background:#fff;
+  font-family:verdana;
+  padding:5px;
+  border-radius:5px;
+  animation:new .5s linear infinite;
+  margin-top:-50px;
+}
+.social a
+{
+  text-decoration:none;
+  color:black;
+  font-weight:bold;
+}
+@keyframes new
+{
+  0%
+  {
+    transform:scaleX(1);
+  }
+  50%
+  {
+    transform:scaleX(.95);
+  }
+  100%
+  {
+    transform:scaleX(1);
+  }
+}
